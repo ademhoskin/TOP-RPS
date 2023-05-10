@@ -1,13 +1,20 @@
 "use strict";
+const rockBtn = document.getElementById("rock");
+const paperBtn = document.getElementById("paper");
+const scissorsBtn = document.getElementById("scissors");
+const result = document.getElementById("result");
+const score = document.getElementById("score");
+
 let player_score = 0;
 let computer_score = 0;
-
+// pl
 const getComputerChoice = () => {
     const choices = ["rock", "paper", "scissors"];
     const randomNum = Math.floor(Math.random() * 3);
     return choices[randomNum];
     };
 
+//play a round
 const playRound = (playerSelection, computerSelection) => {
 
     if (playerSelection === computerSelection) {
@@ -45,13 +52,35 @@ const playRound = (playerSelection, computerSelection) => {
     }
 };
 
-const game = () => {
-    for (let i = 0; i < 5; i++) {
-        const playerSelection = prompt("Rock, paper, or scissors?").toLowerCase();
+//game play
+const game = (playerSelection) => {
         const computerSelection = getComputerChoice();
-        console.log(playRound(playerSelection, computerSelection));
-        console.log(`Player: ${player_score} Computer: ${computer_score}`)
-    }
+        result.textContent = playRound(playerSelection, computerSelection)
+        score.textContent = `Player: ${player_score} Computer: ${computer_score}`
+        if (player_score === 5) {
+            result.textContent = "You win!";
+            player_score = 0;
+            computer_score = 0;
+        }
+        else if (computer_score === 5) {
+            result.textContent = "Computer wins!";
+            player_score = 0;
+            computer_score = 0;
+        }
 };
 
-game();
+// button event listeners
+rockBtn.addEventListener("click", () => {
+    game("rock");
+}
+);
+
+paperBtn.addEventListener("click", () => {
+    game("paper");
+}
+);
+
+scissorsBtn.addEventListener("click", () => {
+    game("scissors");
+}
+);
